@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express()
 const mongoose = require("mongoose");
-const UserModel = require("./models/trialdb");
+const User = require("./models/trialdb");
 
 var cors = require('cors')
 
@@ -10,28 +10,17 @@ app.use(cors()) // Use this after the variable declaration
 
 
 
-const connectDB = async () => {
-    await mongoose.connect("mongodb+srv://mernstack:mernstack@cluster0.bcuwz6b.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://mernstack:mernstack@cluster0.5cslw1o.mongodb.net/?retryWrites=true&w=majority");
+
+const user1 = new User({name: "Seb", age: 27})
+
+
+run()
+async function run() {
+    const user1 = new User({name: "Seb", age: 27})
+    await user1.save()
+    console.log(user1);
 }
-connectDB().catch(err => console.log(err));
-
-const kittySchema = new mongoose.Schema({
-    name: String
-});
-
-const Kitten = mongoose.model("Kitten", kittySchema);
-
-
-
-const silence = new Kitten({ name: "silence is the nane"});
-
-const saveIt = async (err) => {
-    await silence.save();
-    console.log(err)
-
-}
-
-
 
 
 app.get("/api", (req, res) => {
